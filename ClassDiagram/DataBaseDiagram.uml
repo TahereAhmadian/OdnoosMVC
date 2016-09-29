@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>PHP</ID>
+  <OriginalElement>\Model\DataBase\Clean</OriginalElement>
+  <nodes>
+    <node x="59.0" y="515.0">\Model\DataBase\DatabaseAdapterInterface</node>
+    <node x="0.0" y="0.0">\Model\DataBase\DataBase</node>
+    <node x="506.0" y="0.0">\Model\DataBase\Clean</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="\Model\DataBase\DataBase" target="\Model\DataBase\DatabaseAdapterInterface">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="108.5" y="195.5" />
+  <SelectedNodes>
+    <node>\Model\DataBase\Clean</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+    <Category>Constants</Category>
+    <Category>Fields</Category>
+  </Categories>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

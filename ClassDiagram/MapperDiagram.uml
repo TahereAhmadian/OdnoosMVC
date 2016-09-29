@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>PHP</ID>
+  <OriginalElement>\Model\Mapper\TelsMapper</OriginalElement>
+  <nodes>
+    <node x="507.0" y="0.0">\Model\Mapper\RegionsMapper</node>
+    <node x="1000.0" y="193.0">\Model\Mapper\UserProfileMapper</node>
+    <node x="351.0" y="982.0">\Model\Mapper\RolesMapper</node>
+    <node x="157.0" y="718.0">\Model\Mapper\UsersMapper</node>
+    <node x="780.0" y="23.0">\Model\Mapper\ActionsMapper</node>
+    <node x="961.0" y="385.0">\Model\Mapper\UserHistoryMapper</node>
+    <node x="657.0" y="915.0">\Model\Mapper\TelsMapper</node>
+    <node x="92.0" y="894.0">\Model\Mapper\GroupsMapper</node>
+    <node x="916.0" y="959.0">\Model\Mapper\UserLogsMapper</node>
+    <node x="1101.0" y="555.0">\Model\Mapper\UserRoleMapper</node>
+    <node x="75.0" y="323.0">\Model\Mapper\UserGroupMapper</node>
+    <node x="225.0" y="73.0">\Model\Mapper\MapperInterface</node>
+    <node x="428.0" y="377.0">\Model\Mapper\AbstractMapper</node>
+    <node x="0.0" y="548.0">\Model\Mapper\StatesMapper</node>
+    <node x="1010.0" y="756.0">\Model\Mapper\CitiesMapper</node>
+    <node x="610.0" y="1085.0">\Model\Mapper\RoleGroupMapper</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="\Model\Mapper\UserRoleMapper" target="\Model\Mapper\AbstractMapper">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="\Model\Mapper\StatesMapper" target="\Model\Mapper\AbstractMapper">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="\Model\Mapper\UserHistoryMapper" target="\Model\Mapper\AbstractMapper">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="\Model\Mapper\RoleGroupMapper" target="\Model\Mapper\AbstractMapper">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="\Model\Mapper\UserLogsMapper" target="\Model\Mapper\AbstractMapper">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="\Model\Mapper\AbstractMapper" target="\Model\Mapper\MapperInterface">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="\Model\Mapper\UserProfileMapper" target="\Model\Mapper\AbstractMapper">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="\Model\Mapper\GroupsMapper" target="\Model\Mapper\AbstractMapper">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="\Model\Mapper\UserGroupMapper" target="\Model\Mapper\AbstractMapper">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="\Model\Mapper\UsersMapper" target="\Model\Mapper\AbstractMapper">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="\Model\Mapper\RolesMapper" target="\Model\Mapper\AbstractMapper">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="\Model\Mapper\ActionsMapper" target="\Model\Mapper\AbstractMapper">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="\Model\Mapper\TelsMapper" target="\Model\Mapper\AbstractMapper">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="\Model\Mapper\RegionsMapper" target="\Model\Mapper\AbstractMapper">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="\Model\Mapper\CitiesMapper" target="\Model\Mapper\AbstractMapper">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.9" x="1123.4444444444443" y="543.3333333333334" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+    <Category>Constructors</Category>
+    <Category>Constants</Category>
+    <Category>Fields</Category>
+  </Categories>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
