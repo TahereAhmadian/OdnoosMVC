@@ -1,5 +1,6 @@
 <?php
-namespace Model\Mapper; 
+namespace Model\Mapper;
+
 class UserProfileMapper extends AbstractMapper
 { 
 

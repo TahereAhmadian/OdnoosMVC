@@ -57,7 +57,7 @@ class DataBase implements DatabaseAdapterInterface
             $this->config = (new Config\Config())->getConfig(); // load config file in config class
 
             // create pdo connection to DB by using config
-            $this->_dbInstance = new \PDO('mysql:host=' . $this->config['ServerName'] . ';dbname=' . $this->config['DBName'], $this->config['UserName'], $this->config['Password']);
+            $this->_dbInstance = new \PDO('mysql:host=' . $this->config['ServerName'] . ';dbname=' . $this->config['DBName'], $this->config['UserName'], $this->config['Password'],array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
 
             // set attributes for this  connection
             $this->_dbInstance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -81,7 +81,9 @@ class DataBase implements DatabaseAdapterInterface
         try
         {
             // prepare the query
+            //echo $query;
             $this->_result = $this->_dbInstance->prepare($query);
+
             //execute query
             $this->_result->execute();
 
@@ -107,7 +109,7 @@ class DataBase implements DatabaseAdapterInterface
             . (($offset && $limit) ? ' OFFSET ' . $offset : '')
             . (($order) ? ' ORDER BY ' . $order : '');
         $this->query($query);
-        echo "<br/>".$query."<br />";
+        //echo "<br/>".$query."<br />";
         return $this->countRows();
     }
 
@@ -129,7 +131,6 @@ class DataBase implements DatabaseAdapterInterface
      */
     public function update($table, array $data, $where = '')
     {
-        var_dump( $data );
         $set = array();
         foreach ($data as $field => $value) {
             $set[] = $field . '=' . $this->quoteValue($value);
@@ -138,7 +139,7 @@ class DataBase implements DatabaseAdapterInterface
         $set = implode(',', $set);
         $query = 'UPDATE ' . $table . ' SET ' . $set
             . (($where) ? ' WHERE ' . $where : '');
-        echo $query;
+        //echo $query;
         $this->query($query);
         return $this->getAffectedRows();
     }

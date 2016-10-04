@@ -8,180 +8,452 @@ namespace control;
  */
 class DataValidation
 {
-    public function GeneralValidation($param,$pm){
+    /*
+     * this function gets an array and check validity of values for every keys
+     */
+    public function GeneralValidation($param,$msg){
+        $output="true";
         foreach($param as $key=>$val)
         {
             switch ($key){
                 case 'name':
-                    $this->checkNameValidity($val);
+                    if($this->checkNameValidity($val,$msg)){
+                    }
+                    else{
+                        $output="false";
+                    }
+                    break;
+                case 'username':
+                    if($this->checkUserNameValidity($val,$msg)){}
+                    else{
+                        $output="false";
+                    }
                     break;
                 case 'email':
-                    $this->checkEmailValidity($val);
+                    if( $this->checkEmailValidity($val,$msg)){}
+                    else{
+                        $output="false";
+                    }
                     break;
                 case 'password':
-                    $this->checkPasswordValidity($val);
+                    if( $this->checkPasswordValidity($val,$msg)){}
+                    else{
+                        $output="false";
+                    }
                     break;
                 case 'gender':
-                    $this->checkGenderValidity($val);
+                    if($this->checkGenderValidity($val,$msg)){}
+                    else{
+                        $output="false";
+                    }
                     break;
                 case 'url':
-                    $this->checkURLValidity($val);
+                    if($this->checkURLValidity($val,$msg)){}
+                    else{
+                        $output="false";
+                    }
                     break;
                 case 'population':
-                    $this->checkPopulationValidity($val);
+                    if($this->checkPopulationValidity($val,$msg)){}
+                    else{
+                        $output="false";
+                    }
                     break;
                 case 'mobilenumber':
-                    $this->checkMobileValidity($val);
+                    if($this->checkMobileValidity($val,$msg)){}
+                    else{
+                        $output="false";
+                    }
                     break;
                 case 'phonenumber':
-                    $this->checkPhoneNumberValidity($val);
+                    if($this->checkPhoneNumber1Validity($val,$msg)){}
+                    else{
+                        $output="false";
+                    }
                     break;
                 case 'address':
-                    $this->checkAddressValidity($val);
+                    if($this->checkAddressValidity($val,$msg)){}
+                    else{
+                        $output="false";
+                    }
                     break;
                 case 'businessname':
-                    $this->checkBusinessNameValidity($val);
+                    if($this->checkBusinessNameValidity($val,$msg)){}
+                    else{
+                        $output="false";
+                    }
                     break;
                 case 'region':
-                    $this->checkRegionValidity($val);
+                    if($this->checkRegionValidity($val,$msg)){}
+                    else{
+                        $output="false";
+                    }
                     break;
                 case 'city':
-                    $this->checkCityValidity($val);
+                    if($this->checkCityValidity($val,$msg)){}
+                    else{
+                        $output="false";
+                    }
                     break;
                 case 'state':
-                    $this->checkStateValidity($val);
+                    if($this->checkStateValidity($val,$msg)){}
+                    else{
+                        $output="false";
+                    }
                     break;
                 case 'category':
-                    $this->checkCategoryValidity($val);
+                    if($this->checkCategoryValidity($val,$msg)){}
+                    else{
+                        $output="false";
+                    }
                     break;
             }
         }
-
+        if($output=="true")
+            return true;
+        else
+            return false;
 
     }
 
-    public function checkPasswordValidity($pass,$pm){
+    /*
+     * check password validity
+     * password must be equals or biger than 8 characters
+     * password is necessary always
+     */
+    public function checkPasswordValidity($pass,$msg){
         if(strlen(($pass))<8){
-            $pm->show("your url address is very long!");
+            $msg->show("your password is small, must be bigger than 8 characters!");
+            return false;
         }
+        return true;
     }
 
-    public function checkGenderValidity($gender,$pm){
+    /*
+     * check gender validity
+     * gender must be number, 0 or 1
+     * gender is optional
+     */
+    public function checkGenderValidity($gender,$msg){
+        if($gender==null)
+            return true;
+        if($gender==0 || $gender==1){
+            return true;
+        }
+        else{
+            $msg->show("your gender is wrong!");
+            return false;
+        }
 
     }
 
 
-    public function checkURLValidity($url,$pm){
+    /*
+     * check URL validity
+     * URL must be less than 1001 characters
+     */
+    public function checkURLValidity($url,$msg){
         if(strlen(($url))>1000){
-            $pm->show("your url address is very long!");
+            $msg->show("your url address is very long!");
+            return false;
         }
-
+        return true;
     }
 
-    public function checkPopulationValidity($pop,$pm){
+    /*
+     * check population validity
+     * population must be number with at last 7 digit.
+     */
+    public function checkPopulationValidity($pop,$msg){
         if(!is_numeric($pop)){
-            $pm->show("variable that present population is not a number!");
+            $msg->show("variable that present population is not a number!");
+            return false;
         }
         $length = ceil(log10($pop));
         if($length>7){
-            $pm->show("population number is very big!");
+            $msg->show("population number is very big!");
+            return false;
+        }
+        return true;
+    }
+
+
+
+    /*
+     * check business name validity
+     * business name must be combination of numbers and letters and space
+     *
+     */
+    public function checkBusinessNameValidity($businessname,$msg){
+        if(strlen($businessname)>50){
+            $msg->show("your business name is very long!");
+            return false;
+        }
+        else{
+            //for($i=0;$i<50;$i++){
+                //$chr=substr($businessname,$i,1);
+                //if(ord($chr<48)||ord($chr>122)||((ord($chr)>57)&&(ord($chr)<65))||((ord($chr)>90)&&(ord($chr)<97))){
+                 //   $msg->show("your business name must have alphabet and number characters!");
+                 //   return false;
+               // }
+            if (!preg_match("/^[a-zA-Z0-9 ]*$/",$businessname)) {
+                $msg->show("your business name must have alphabet and number characters!");
+                return false;
+            }
+        }
+            return true;
+
+    }
+
+
+    /*
+     * check region validity
+     * region must be a number
+     * region is optional
+     */
+    public function checkRegionValidity($region,$msg){
+        if($region==null)
+            return true;
+        if(is_numeric($region)){
+            return true;
+        }
+        else{
+            $msg = new generate_message();
+            $msg->show("region value must be number!");
+            return false;
+        }
+    }
+
+    /*
+     * check city validity
+     * city must be a number
+     * city is optional
+     */
+    public function checkCityValidity($city,$msg){
+        if($city==null)
+            return true;
+        if(is_numeric($city)){
+            return true;
+        }
+        else{
+            $msg = new generate_message();
+            $msg->show("city value must be number!");
+            return false;
+        }
+    }
+
+    /*
+     * check state validity
+     * state must be a number
+     * state is optional
+     */
+    public function checkStateValidity($state,$msg){
+        if($state==null)
+            return true;
+        if(is_numeric($state)){
+            return true;
+        }
+        else{
+            $msg = new generate_message();
+            $msg->show("state value must be number!");
+            return false;
         }
     }
 
 
+    /*
+     * check category validity
+     * category must be a number
+     */
+    public function checkCategoryValidity($category,$msg){
+        if(is_numeric($category)){
+            return true;
+        }
+        else{
+            $msg = new generate_message();
+            $msg->show("category value must be number!");
+            return false;
+        }
 
-    public function checkBusinessNameValidity($businessname,$pm){
+    }
+    /*
+     * check username validity
+     * username must be combination of letters and space
+     *
+     *
+     */
+    public function checkUserNameValidity($username,$msg){
+        echo "check username </br>";
+        if(strlen($username)>50){
+            $msg->show("your name is very long!");
+            echo "false </br>";
+            return false;
+        }
+        else{
+            if (!preg_match("/^[a-zA-Z ]*$/",$username)) {
+                $msg->show("for name Only letters and white space allowed!");
+                echo "false </br>";
+                return false;
+            }
+            echo "true </br>";
+            return true;
+        }
 
     }
 
-
-    public function checkRegionValidity($region,$pm){
-
-    }
-
-    public function checkCityValidity($city,$pm){
-
-    }
-
-    public function checkStateValidity($state,$pm){
-
-    }
-
-
-    public function checkCategoryValidity($category,$pm){
-
-    }
-
-    public function checkNameValidity($name,$pm){
+    /*
+     * check name validity
+     */
+    public function checkNameValidity($name,$msg){
+        if(strlen($name)>50){
+            $msg->show("your name is very long!");
+            return false;
+        }
+        else{
+            if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
+                $msg->show("for name Only letters and white space allowed!");
+                return false;
+            }
+            return true;
+        }
 
     }
-    public function checkAreaCodeValidity($name,$pm){
+    /*
+     * check area code validity
+     */
+    public function checkAreaCodeValidity($phone,$msg){
+        if(is_numeric(substr($phone,0,3))){
+            if (strlen($phone) == 8) {
+                if (substr($phone, 0, 1) != '0') {
+                    $msg = new generate_message();
+                    $msg->show("area code must start with 0 digit!");
+                    return false;
+                }
+            } else {
+                $msg = new generate_message();
+                $msg->show("digits number of area code must be 3!");
+                return false;
+            }
+        }
+        else{
+            $msg = new generate_message();
+            $msg->show("area code must have digit characters!");
+            return false;
+        }
+        return true;
 
     }
-    public function checkEmailValidity($name,$pm){
+    /*
+     * check email validity
+     */
+    public function checkEmailValidity($email,$msg){
+        if($email==null)
+            return true;
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $msg->show("invalid email format!");
+            return false;
+        }
+        return true;
 
     }
-    public function checkAddressValidity($name,$pm){
-
+    /*
+     * check address validity
+     */
+    public function checkAddressValidity($address,$msg){
+        if($address==null)
+            return true;
+        $arr1 = str_split($address);
+        foreach($arr1 as $key=>$val){
+            if($val=='@'||$val=='%'||$val=='_'||$val=='\''||$val=='"'||$val==';'||$val==':'){
+                $msg->show("address include illegal special characters!");
+                return false;
+            }
+        }
+        return true;
     }
-    public function checkPhoneNumber1Validity($phone,$pm){
+    /*
+     * check phone number validity(home phone)(only 8 characters)
+     */
+    public function checkPhoneNumber1Validity($phone,$msg){
         if(is_numeric(substr($phone,0,8))){
             if (strlen($phone) == 8) {
                 if (substr($phone, 0, 1) == '0') {
-                    $pm = new generate_message();
-                    $pm->show("phonenumber should not start with 0 digit!");
+                    $msg = new generate_message();
+                    $msg->show("phonenumber should not start with 0 digit!");
+                    return false;
                 }
             } else {
-                $pm = new generate_message();
-                $pm->show("digits number of phonenumber must be 8!");
+                $msg = new generate_message();
+                $msg->show("digits number of phonenumber must be 8!");
+                return false;
             }
         }
         else{
-            $pm = new generate_message();
-            $pm->show("phonenumber must have digit characters!");
+            $msg = new generate_message();
+            $msg->show("phonenumber must have digit characters!");
+            return false;
         }
+        return true;
 
     }
-    public function checkPhoneNumber2Validity($phone,$pm){
-        if(is_numeric(substr($phone,0,10))){
-            if (strlen($phone) == 11) {
-                if (substr($phone, 0, 2) != '09') {
-                    $pm = new generate_message();
-                    $pm->show("prefix of phonenumber is wrong!");
+    /*
+     * check phone number validity(home number)(special numbers)(between 3 - 8 characters)
+     */
+    public function checkPhoneNumber2Validity($phone,$msg){
+        if(is_numeric(substr($phone,0,strlen($phone)))){
+            if ((strlen($phone) >=3) && (strlen($phone) <=8 ) ) {
+                if (substr($phone, 0, 1) == '0') {
+                    $msg = new generate_message();
+                    $msg->show("phonenumber should not start with 0 digit!");
+                    return false;
                 }
             } else {
-                $pm = new generate_message();
-                $pm->show("digits number of phonenumber must be 11!");
+                $msg = new generate_message();
+                $msg->show("digits number of phonenumber must be between 3 and 8!");
+                return false;
             }
         }
         else{
-            $pm = new generate_message();
-            $pm->show("phonenumber must have digit characters!");
+            $msg = new generate_message();
+            $msg->show("phonenumber must have digit characters!");
+            return false;
         }
+        return true;
 
     }
-    public function checkMobileValidity($phone,$pm){
+    /*
+     * check mobile validity
+     */
+    public function checkMobileValidity($phone,$msg){
         if(is_numeric(substr($phone,1,10))){
             if (strlen($phone) == 11) {
                 if (substr($phone, 0, 2) != '09') {
-                    $pm = new generate_message();
-                    $pm->show("prefix of phonenumber is wrong!");
+                    $msg = new generate_message();
+                    $msg->show("prefix of phonenumber is wrong!");
+                    return false;
                 }
             } else {
-                $pm = new generate_message();
-                $pm->show("digits number of phonenumber must be 11!");
+                $msg = new generate_message();
+                $msg->show("digits number of phonenumber must be 11!");
+                return false;
             }
         }
         else{
-                $pm = new generate_message();
-                $pm->show("phonenumber must have digit characters!");
+            $msg = new generate_message();
+            $msg->show("phonenumber must have digit characters!");
+            return false;
             }
+            return true;
     }
-    public function checkIdValidity($id,$pm){
+    /*
+     * check id validity
+     */
+    public function checkIdValidity($id,$msg){
         if(is_numeric($id)){
             return true;
         }
         else{
+            $msg->show("id must be a number!");
             return false;
         }
     }
