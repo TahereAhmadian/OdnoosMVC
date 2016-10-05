@@ -678,7 +678,7 @@ $check = new C\check_input();
              break;
          case 'edit_password' :
              //TODO: check access codes
-             echo $_REQUEST['password'];
+            // echo $_REQUEST['password'];
              $essentialArray=array("id"=>true,"password"=>true,"confirmPassword"=>true);//array that show which one of the parameters is essential
              if ($check->checkEssential($essentialArray , $_REQUEST)) {
                  if($_REQUEST["password"]==$_REQUEST["confirmPassword"]) {
