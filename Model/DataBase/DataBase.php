@@ -81,7 +81,7 @@ class DataBase implements DatabaseAdapterInterface
         try
         {
             // prepare the query
-            //echo $query;
+            echo "<br/>".$query."<br />";
             $this->_result = $this->_dbInstance->prepare($query);
 
             //execute query
@@ -109,7 +109,7 @@ class DataBase implements DatabaseAdapterInterface
             . (($offset && $limit) ? ' OFFSET ' . $offset : '')
             . (($order) ? ' ORDER BY ' . $order : '');
         $this->query($query);
-        //echo "<br/>".$query."<br />";
+        echo "<br/>".$query."<br />";
         return $this->countRows();
     }
 
@@ -134,12 +134,12 @@ class DataBase implements DatabaseAdapterInterface
         $set = array();
         foreach ($data as $field => $value) {
             $set[] = $field . '=' . $this->quoteValue($value);
-            //echo $value;
+            echo $value;
         }
         $set = implode(',', $set);
         $query = 'UPDATE ' . $table . ' SET ' . $set
             . (($where) ? ' WHERE ' . $where : '');
-        //echo $query;
+        //echo "<br />".$query;
         $this->query($query);
         return $this->getAffectedRows();
     }
@@ -183,10 +183,11 @@ class DataBase implements DatabaseAdapterInterface
         if ($value === null) {
             $value = 'NULL';
         }
-        else if (!is_numeric($value)) {
+        else if (is_string($value)) {
             //$value = "'" . mysqli_real_escape_string($this->_link, $value) . "'";
             $value = "'". $value ."'";
         }
+
         return $value;
     }
 

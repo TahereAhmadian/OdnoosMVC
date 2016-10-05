@@ -53,7 +53,6 @@ class User
      *
      */
     public function get_users( $FirstName='' , $LastName='' , $Email='', $Telephone='', $StateId='' , $CityId='' ,$RegionId='' , $Gender='', $isLogin='' , $isDelete ='' , $isActive = '' )
-    //public function get_users( $property = array() )
     {
         // condition is an empty array at first
         $condition = array();
@@ -82,13 +81,45 @@ class User
         return $MapperInstance->find($condition ) ;
     }
 
+    /*
+ *
+ *find a user based on a specific property like id , property passed by an array
+     *
+ *
+ */
+    public function search_users( $FirstName='' , $LastName='' , $Email='', $Telephone='', $Gender='', $AccountType='' , $ClubName='' , $FromDate='' , $ToDate='' )
+    {
+        // condition is an empty array at first
+        $condition = array();
+
+        // set values for search if parameter is set
+        ($FirstName == '' ?  : $condition['FirstName'] = $FirstName) ;
+        ($LastName == '' ?  : $condition['LastName'] = $LastName) ;
+        ($Email == '' ?  : $condition['Email'] = $Email) ;
+        ($Telephone == '' ?  : $condition['Telephone'] = $Telephone) ;
+        ($Gender == '' ?  : $condition['Gender'] = $Gender) ;
+        //($AccountType == '' ?  : $condition['AccountType'] = $AccountType) ;
+        //($ClubName == '' ?  : $condition['ClubName'] = $ClubName) ;
+        //($FromDate == '' ?  : $condition['FromDate'] = $FromDate) ;
+        //($ToDate == '' ?  : $condition['ToDate'] = $ToDate) ;
+        //TODO: this should be review
+
+        $fields='*';
+
+        $MapperInstance = new M\UserFullDataMapper( $this->dataBase );
+
+        // prepare condition string for where
+        $condition = $this->prepareConditionAdvSearch( $condition );
+
+        return $MapperInstance->find($condition ) ;
+    }
+
 
 
 
     /*
-     * update user properties
-     *      $property => array of fields that will change
-     *      condition => array of fields that make condition
+     * update user main data
+     *
      */
     public function edit_user( $UserId , $FirstName = '' , $LastName = '' , $Email = '' , $Telephone='' )
     {
@@ -121,10 +152,36 @@ class User
     }
 
     /*
+     * edit password user
+     *
+     */
+    public function edit_user_password( $UserId , $Password )
+    {
+        //check user id
+        if( !$this->checkId( $UserId ))
+            return "msg edit password: user id is not valid";
+        // check password to be set
+        if( !isset( $Password ) )
+        {
+            return "msg password edit: password not set";
+        }
+        //create new instance from user mapper
+        $UserMapper = new M\UsersMapper( $this->dataBase );
+        //create data array
+        $data = array();
+        //TODO:  edit Password
+        $data['password'] =  $Password;
+        //create condition
+        $condition = "id=".$UserId;
+        // update user password
+        return $UserMapper->update( $data , $condition );
+    }
+
+    /*
      *
      * insert new user to DB
      */
-    public function register_user($userName , $firstName , $lastName , $password , $telephone , $Email=''  , $stateId = '' , $cityId  = '' , $regionId = '' , $address = '' , $gender = ''  )
+    public function register_user($userName , $firstName , $lastName , $password , $telephone , $Email=''  , $stateId = '' , $cityId  = '' , $regionId = '' , $address = '' , $gender = '' , $otherPhone = array()  )
     {
         $MapperInstance = new M\UsersMapper( $this->dataBase );
 
@@ -169,6 +226,25 @@ class User
             var_dump( $UserHistoryProperty );
 
             $UserHistoryMapper->insert( $UserHistoryProperty );
+
+            // insert other phones for this User
+            if( sizeof( $otherPhone ) > 0 )
+            {
+                //create instance of tel mapper
+                $TelsMapper = new M\TelsMapper( $this->dataBase );
+                //for each phone number, iterate one time more
+                foreach ( $otherPhone as $key => $phoneItem )
+                {
+                    $data = array();
+                    $data['UserId'] = $UserId;
+                    $data['Telephone'] = $phoneItem;
+                    $data['CreationDate'] = date('Y-m-d h:i:s');
+
+                    $TelsMapper->insert( $data );
+
+                }
+
+            }
         }
 
         return $UserId;
@@ -255,7 +331,7 @@ class User
     /*
      *  get actions for a specific user
      */
-    protected function get_actions_by_userid( $UserId )
+    public function get_actions_by_userid( $UserId )
     {
 
         // create new instance of user action mapper
@@ -271,14 +347,19 @@ class User
     /*
      * check a user have access to an action
      */
-    protected function check_user_access_to_action( $actionName , $ActionList  )
+    public function check_user_access_to_action( $actionName , $ActionList  )
     {
-        //create new instance from action mapper
+
+        //create new instance from action mappers
         $actionMapper = new M\ActionsMapper( $this->dataBase );
 
         //find id of this actionName
         if( !$result = $actionMapper->find ( "ActionName='".$actionName."'" ) )
-            return "msg check user access: there is no action for your action name";
+        {
+           echo "msg check user access: there is no action for your action name";
+            return false;
+        }
+
         $actionId = ($result[0] ? $result[0]['id'] : null );
         // if no id found return
         if( $actionId == null ) return false;
@@ -487,13 +568,13 @@ class User
     /*
      * logout
      */
-    public function user_logout( $UserId )
+    public function logout_user($UserId )
     {
         //check user id
         if( !$this->checkId( $UserId ) )
             return "msg logout: User id is not valid ";
-        //TODO: logout code
-        //
+
+        //create new instance from
         $UserHistoryMapper = new M\UserHistoryMapper( $this->dataBase );
 
         // create data for update
@@ -744,7 +825,7 @@ class User
     {
         // check action id
         if( !$this->checkId( $ActionId ) )
-            return "Err get action : role id is not valid";
+            return "Err get action : action id is not valid";
 
         // create new instance from action mapper
         $ActionMapper = new M\ActionsMapper( $this->dataBase );
@@ -760,7 +841,7 @@ class User
     public function edit_action( $ActionId , $ActionName='' , $ActionDescription ='')
     {
         if( $ActionName === ''  && $ActionDescription === '' )
-            return 'Edit Action: You should specify at least One Paramemter!';
+            return 'Edit Action: You should specify at least One parameter!';
 
         //Check action id validity
         if( !$this->checkId( $ActionId ) )
@@ -1377,11 +1458,13 @@ class User
         //$this->insertUser(array('id'=>null , 'FirstName'=>'dede' , 'LastName'=>'sads' , 'UserName'=>'sddvdsf' , 'Password'=>'sdsdfsdv' , 'Email'=>'sferte','Telephone'=>'egfsdgf', 'CreationDate'=>date('Y-m-d h:i:s')));
 
         //$this->mergeArray( array("asd", "sdfsdfs") , array("234","3245234"));
-        //$id =  $this->register_user( 'aramii' , 'aram', 'wefwefgsdgf' , '123' ,'4234234234' ,'345345345'  );
+        //$id =  $this->register_user( 'aramsa' , 'arsssam', 'rrrrrrr' , 'ttt' ,'4234234234' ,'345345345' , array( '0952258','08542145','0854512') );
+        var_dump( $this->register_user('adddddxxd','asdxxddas','qedddqwxxeqwe','098766','09876','qweqwe','1','2','3','add','1', array( '0952258','08542145','0854512')  ) );
         //var_dump( $this->delete_User_By_Id('4') );
         //$email = 'sd';        $this->register_user('asgfbhdad', 'asdasd' , 'asdasd' , '42525' , 'ftrgedfrth' , $email , '2');
 
-       // var_dump( $this->login_user( 'aram' , '123' ) );
+        //var_dump( $this->login_user( 'aram' , '123' ) );
+        //var_dump( $this->logout_user( 2 )) ;
         //var_dump( $this->login_user( 'aramii' , '123' ) );
         //var_dump( $this->login_user( 'aramy' , '123' ) );
         //var_dump( $this->edit_user_profile( 4, 0 ,'','','',''));
@@ -1404,8 +1487,8 @@ class User
        //var_dump( $this->delete_city( '1' ) );
        //var_dump( $this->set_role_group( '1' , '3'));
        //var_dump( $this->delete_role_group( '1' , '3'));
-       // var_dump($this->check_user_access_to_action("action5", $this->get_actions_by_userid(2)));
-        var_dump($this->user_logout(2));
+       // var_dump( $this->edit_user_password('2' , '097718'));
+
 
 
 

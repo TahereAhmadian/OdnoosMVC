@@ -15,6 +15,14 @@ class generate_message
 
         echo json_encode($msg);
     }
+
+    public function get_data($data=null,$title=null){
+
+        $param=array("act"=>"data","data"=>$data,"title"=>$title);
+
+        echo json_encode($param);
+
+    }
 }
 
 class button_message{
