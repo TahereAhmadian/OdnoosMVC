@@ -425,6 +425,9 @@ class DataValidation
      * check mobile validity
      */
     public function checkMobileValidity($phone,$msg){
+        if($phone==""){
+            return true;
+        }
         if(is_numeric(substr($phone,1,10))){
             if (strlen($phone) == 11) {
                 if (substr($phone, 0, 2) != '09') {

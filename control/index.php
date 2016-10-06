@@ -69,25 +69,30 @@ $check = new C\check_input();
 
 
                      $response = $access->login_user($validParam["username"] , $validParam["password"]);
-                    // print_r($response);
-                     $sent_param=array();//array that should be sent to view layer
-                     foreach ($response as $key=>$val){
-                         $sent_param=array($key=>$val);
-                     }
-                     echo"**********************************************************";
-                   //  print_r($sent_param);
-                     /*
-                      * set session for user and return allowed actions
-                      */
-                     if(!isset($_SESSION)){
-                         session_start();
-                         $useraction=$access->get_actions_by_userid($sent_param[0]['UserId']);
-                         $_SESSION['actions'] = $useraction;
-                     }
-                     $msg->get_data($sent_param[0]);//user information that must be returned
+                    print_r($response);
 
-                     echo "</br>" ;
-                     var_dump($_SESSION['actions']);
+                     $sent_param=array();//array that should be sent to view layer
+                     if(is_array($response)){
+                         foreach ($response as $key => $val){
+                             $sent_param=array($key=>$val);
+                         }
+                         echo"**********************************************************";
+                         print_r($sent_param);
+                         /*
+                          * set session for user and return allowed actions
+                          */
+                         if(!isset($_SESSION)){
+                             session_start();
+                             $useraction=$access->get_actions_by_userid($sent_param[0]['UserId']);
+                             $_SESSION['actions'] = $useraction;
+                         }
+                         $msg->get_data($sent_param[0]);//user information that must be returned
+
+                         echo "</br>" ;
+                         var_dump($_SESSION['actions']);
+
+                     }
+
 
 
                  }
@@ -587,15 +592,14 @@ $check = new C\check_input();
                      if(!isset($_SESSION)) {
                          session_start();
                      }
-
-
+                     
                      //call appropriate access level function(deactivate_user)
                      $access = new A\User();
 
                      /*
                      * check user is allowed
                      */
-                     if($allowed = $access->check_user_access_to_action("admin_user_active" ,$_SESSION['actions'] )){
+                     if($allowed = $access->check_user_access_to_action("user_deactive" ,$_SESSION['actions'] )){
 
                          //call appropriate access level function(deactivate_user)
                          if($access->deactivate_user($validParam["id"])==1)
@@ -613,6 +617,9 @@ $check = new C\check_input();
 
                      }
                  }
+                 else{
+                     $msg->show("all of input parameters are not valid!");
+                 }
              }
              else{
                  $msg->show("essential parameters not set, please check!");
@@ -628,16 +635,38 @@ $check = new C\check_input();
                  $validParam=array("id"=>$_REQUEST['id']);//inputs that should be check for data validity
                  if($valid->GeneralValidation($validParam,$msg))
                  {
+
+                     if(!isset($_SESSION)) {
+                         session_start();
+                     }
+
                      //call appropriate access level function(delete_user_by_id)
                      $access = new A\User();
-                     if( $access->delete_User_By_Id($validParam["id"])==1 ){
-                         $msg->show("user deletion was successful.");
+
+
+                     /*
+                    * check user is allowed
+                    */
+                     if($allowed = $access->check_user_access_to_action("delete_user" ,$_SESSION['actions'] )){
+
+                         //call appropriate access level function(deactivate_user)
+                         if( $access->delete_User_By_Id($validParam["id"]) ){
+                             $msg->show("user deletion was successful.");
+                         }
+                         else{
+                             $msg->show("user is not exists!");
+                         }
+
                      }
                      else{
-                         $msg->show("user is not exists!");
+
+                         $msg->show("you are not allowed for this action!");
+
                      }
-                     //http://odnoosmvc.local/control/?act=delete_user&id=7
-                     //TODO: delete_user code
+
+                 }
+                 else{
+                     $msg->show("all of input parameters are not valid!");
                  }
              }
              else{
@@ -658,18 +687,38 @@ $check = new C\check_input();
                  $_REQUEST["mobilenumber"]= ( isset( $_REQUEST["mobilenumber"] ) ? $_REQUEST["mobilenumber"] : "" );
 
 
-
                  $validParam=array("id"=>$_REQUEST['id'],"firstname"=>$_REQUEST['firstname'],"lastname"=>$_REQUEST['lastname'],"email"=>$_REQUEST['email'],"mobilenumber"=>$_REQUEST['mobilenumber']);//inputs that should be check for data validity
                  if($valid->GeneralValidation($validParam,$msg))
                  {
+                     if(!isset($_SESSION)) {
+                         session_start();
+                     }
+
                      $access = new A\User();
-                     if( $access->edit_user($validParam["id"],$validParam["firstname"],$validParam["lastname"],$validParam["email"],$validParam["mobilenumber"]) ){
-                         $msg->show("edit user essential information was successful.");
+
+                     /*
+                   * check user is allowed
+                   */
+                     if($allowed = $access->check_user_access_to_action("delete_user" ,$_SESSION['actions'] )){
+
+                         //call appropriate access level function(deactivate_user)
+                         if( $access->edit_user($validParam["id"],$validParam["firstname"],$validParam["lastname"],$validParam["email"],$validParam["mobilenumber"]) ){
+                             $msg->show("edit user essential information was successful.");
+                         }
+                         else{
+                             $msg->show("edit user essential information was unsuccessful!");
+                         }
+
                      }
                      else{
-                         $msg->show("edit user essential information was unsuccessful!");
+
+                         $msg->show("you are not allowed for this action!");
+
                      }
-                     //TODO: edit_user code
+
+                 }
+                 else{
+                     $msg->show("all of input parameters are not valid!");
                  }
              }
              else{
@@ -684,14 +733,40 @@ $check = new C\check_input();
                  if($_REQUEST["password"]==$_REQUEST["confirmPassword"]) {
                      $validParam = array("id" => $_REQUEST['id'], "password" => $_REQUEST['password']);//inputs that should be check for data validity
                      if ($valid->GeneralValidation($validParam, $msg)) {
-                         $access = new A\User();
-                         if ($access->edit_user_password($validParam["id"], $validParam["password"])) {
-                             $msg->show("edit password was successful.");
-                         } else {
-                             $msg->show("edit password was unsuccessful!");
+
+                         if(!isset($_SESSION)) {
+                             session_start();
                          }
-                         //TODO: edit_user code
+
+                         $access = new A\User();
+
+                         /*
+                       * check user is allowed
+                       */
+                         if($allowed = $access->check_user_access_to_action("edit_password" ,$_SESSION['actions'] )){
+
+                             //call appropriate access level function(edit_user_password)
+                             if ($access->edit_user_password($validParam["id"], $validParam["password"])) {
+                                 $msg->show("edit password was successful.");
+                             } else {
+                                 $msg->show("edit password was unsuccessful!");
+                             }
+                         }
+                         else{
+
+                             $msg->show("you are not allowed for this action!");
+
+                         }
+
                      }
+                     else{
+
+                         $msg->show("all of input parameters are not valid!");
+                     }
+                 }
+                 else{
+                     $msg->show("password and confirm password must be equal!");
+
                  }
              }
              else{

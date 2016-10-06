@@ -128,6 +128,9 @@ abstract class AbstractMapper implements MapperInterface
      */
     public function update( $data , $condition )
     {
+        echo "</br";
+        //var_dump($this->_adapter->update($this->_entityTable, $data, $condition ));
+        echo "<br />";
         return $this->_adapter->update($this->_entityTable, $data, $condition );
     }
 
