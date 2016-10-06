@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ajsx page</title>
+
+</head>
+<body>
+<form>
+    <div id="place">
+        <input type="text"/>
+        <input type="button" onclick="getPage()"/>
+    </div>
+
+</form>
+
+<script>
+    function getPage(){
+        var xmlhttp;
+        if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                document.getElementById('place').innerHTML=xmlhttp.responseText;
+            }
+        }
+        xmlhttp.open("GET", '../public/to.php',true);
+        xmlhttp.send();
+    }
+
+</script>
+
+
+</body>
+
+</html>
