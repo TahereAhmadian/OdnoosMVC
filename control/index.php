@@ -13,7 +13,9 @@ use \Model\Access as A;
 use \Model\Mapper as M;
 use \control as C;
 
-define('APPLICATION_PATH', realpath('../'));
+if(!(APPLICATION_PATH)){
+    define('APPLICATION_PATH', realpath('../'));
+}
 
 
 $paths = array(
@@ -87,6 +89,9 @@ class index
                                 $msg->get_data($sent_param[0]);//user information that must be returned
                                 var_dump($_SESSION['actions']);
                             }
+                            else{
+                                $msg->show($response);
+                            }
                         }
                     } else {
                         $msg->show("essential parameters not set, please check!");
@@ -110,7 +115,12 @@ class index
                             if ($allowed = $access->check_user_access_to_action("get_user_profile", $_SESSION['actions'])) {
                                 //call appropriate access level function(get_user_profile)
                                 $response = $access->get_user_profile($validParam["id"]);
-                                $msg->get_data($response);//user profile information that must be returned
+                                if(is_array($response)){
+                                    $msg->get_data($response);//user profile information that must be returned
+                                }
+                                else{
+                                    $msg->show($response);
+                                }
                             } else {
                                 $msg->show("you are not allowed for this action!");
                             }
@@ -183,7 +193,12 @@ class index
                             if ($allowed = $access->check_user_access_to_action("get_user_by_id", $_SESSION['actions'])) {
                                 //call appropriate access level function(get_user_by_id)
                                 $response = $access->get_user_by_id($validParam["id"]);
-                                $msg->get_data($response);//user profile information that must be returned
+                                if(is_array($response)){
+                                    $msg->get_data($response);//user profile information that must be returned
+                                }
+                                else{
+                                    $msg->show($response);
+                                }
                             } else {
                                 $msg->show("you are not allowed for this action!");
                             }
@@ -356,15 +371,21 @@ class index
                     if ($allowed = $access->check_user_access_to_action("get_users", $_SESSION['actions'])) {
                         //call appropriate access level function(register_user)
                         $response = $access->get_users();
-                        //print_r($response);
-                        $sent_param = array();//array that should be sent to view layer other parameters has been sifted
-                        foreach ($response as $key => $val) {
-                            $sent_param[] = array("FirstName" => $val['FirstName'], "LastName" => $val['LastName'], "Email" => $val['Email'], "CreationDate" => $val['CreationDate'], "Gender" => $val['Gender']);
-                        }
-                        echo "********************************************************** </br>";
-                        //print_r($sent_param);
+                        if(is_array($response)){
+                            //print_r($response);
+                            $sent_param = array();//array that should be sent to view layer other parameters has been sifted
+                            foreach ($response as $key => $val) {
+                                $sent_param[] = array("FirstName" => $val['FirstName'], "LastName" => $val['LastName'], "Email" => $val['Email'], "CreationDate" => $val['CreationDate'], "Gender" => $val['Gender']);
+                            }
+                            echo "********************************************************** </br>";
+                            //print_r($sent_param);
 
-                        $msg->get_data($sent_param);//user profile information that must be returned
+                            $msg->get_data($sent_param);//user profile information that must be returned
+                        }
+                        else{
+                            $msg->show($response);
+                        }
+
 
                     } else {
                         $msg->show("you are not allowed for this action!");

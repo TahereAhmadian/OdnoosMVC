@@ -356,7 +356,7 @@ class User
         //find id of this actionName
         if( !$result = $actionMapper->find ( "ActionName='".$actionName."'" ) )
         {
-           echo "msg check user access: there is no action for your action name";
+          // echo "msg check user access: there is no action for your action name";
             return false;
         }
 
