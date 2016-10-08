@@ -132,6 +132,166 @@ class index
                     }
                     break;
                 /*
+                * if act is set user description
+               */
+                case 'set_user_description' :
+                    $essentialArray = array("id" => true,"description"=>true);//array that show which one of the parameters is essential
+                    if ($check->checkEssential($essentialArray, $_REQUEST)) {
+                        $validParam = array("id" => $_REQUEST['id'],"description"=>$_REQUEST['description']);//inputs that should be check for data validity
+                        if ($valid->GeneralValidation($validParam, $msg)) {
+                            if (!isset($_SESSION)) {
+                                session_start();
+                            }
+                            $access = new A\User();
+                            /*
+                             * call appropriate access level function(logout_user)
+                             */
+                            if ($allowed = $access->check_user_access_to_action("set_user_description", $_SESSION['actions'])) {
+                                //$response = $access->set_user_description($validParam["id",$validParam["description"]);
+
+
+                                //TODO: processing for set_user_description function in database layer
+
+
+
+                            }
+                            else{
+                                $msg->show("you are not allowed for this action!");
+                            }
+                        }
+                    } else {
+                        $msg->show("essential parameters not set, please check!");
+                    }
+                    break;
+                /*
+                 * if act is get last edit password
+                */
+                case 'get_last_edit_password' :
+                    $essentialArray = array("id" => true);//array that show which one of the parameters is essential
+                    if ($check->checkEssential($essentialArray, $_REQUEST)) {
+                        $validParam = array("id" => $_REQUEST['id']);//inputs that should be check for data validity
+                        if ($valid->GeneralValidation($validParam, $msg)) {
+                            if (!isset($_SESSION)) {
+                                session_start();
+                            }
+                            $access = new A\User();
+                            /*
+                             * call appropriate access level function(logout_user)
+                             */
+                            if ($allowed = $access->check_user_access_to_action("get_last_edit_password", $_SESSION['actions'])) {
+                               // $response = $access->get_last_edit_password($validParam["id"]);
+
+
+                                //TODO: processing for get_last_edit_password function in database layer
+
+
+
+                            }
+                            else{
+                                $msg->show("you are not allowed for this action!");
+                            }
+                        }
+                    } else {
+                        $msg->show("essential parameters not set, please check!");
+                    }
+                    break;
+                /*
+                 * if act is get creation date
+                */
+                case 'get_creation_date' :
+                    $essentialArray = array("id" => true);//array that show which one of the parameters is essential
+                    if ($check->checkEssential($essentialArray, $_REQUEST)) {
+                        $validParam = array("id" => $_REQUEST['id']);//inputs that should be check for data validity
+                        if ($valid->GeneralValidation($validParam, $msg)) {
+                            if (!isset($_SESSION)) {
+                                session_start();
+                            }
+                            $access = new A\User();
+                            /*
+                             * call appropriate access level function(logout_user)
+                             */
+                            if ($allowed = $access->check_user_access_to_action("get_creation_date", $_SESSION['actions'])) {
+                                // $response = $access->get_creation_date($validParam["id"]);
+
+
+                                //TODO: processing for get_creation_date function in database layer
+
+
+
+                            }
+                            else{
+                                $msg->show("you are not allowed for this action!");
+                            }
+                        }
+                    } else {
+                        $msg->show("essential parameters not set, please check!");
+                    }
+                    break;
+                /*
+                 * if act is get user created by
+                */
+                case 'get_user_created_by' :
+                    $essentialArray = array("id" => true);//array that show which one of the parameters is essential
+                    if ($check->checkEssential($essentialArray, $_REQUEST)) {
+                        $validParam = array("id" => $_REQUEST['id']);//inputs that should be check for data validity
+                        if ($valid->GeneralValidation($validParam, $msg)) {
+                            if (!isset($_SESSION)) {
+                                session_start();
+                            }
+                            $access = new A\User();
+                            /*
+                             * call appropriate access level function(logout_user)
+                             */
+                            if ($allowed = $access->check_user_access_to_action("get_user_created_by", $_SESSION['actions'])) {
+                                // $response = $access->get_user_created_by($validParam["id"]);
+
+
+                                //TODO: processing for get_user_created_by function in database layer
+
+
+
+                            }
+                            else{
+                                $msg->show("you are not allowed for this action!");
+                            }
+                        }
+                    } else {
+                        $msg->show("essential parameters not set, please check!");
+                    }
+                    break;
+                /*
+                * if act is restore user
+               */
+                case 'restore_user' :
+                    $essentialArray = array("id" => true);//array that show which one of the parameters is essential
+                    if ($check->checkEssential($essentialArray, $_REQUEST)) {
+                        $validParam = array("id" => $_REQUEST['id']);//inputs that should be check for data validity
+                        if ($valid->GeneralValidation($validParam, $msg)) {
+                            if (!isset($_SESSION)) {
+                                session_start();
+                            }
+                            $access = new A\User();
+                            /*
+                             * call appropriate access level function(logout_user)
+                             */
+                            if ($allowed = $access->check_user_access_to_action("restore_user", $_SESSION['actions'])) {
+                                // $response = $access->restore_user($validParam["id"]);
+
+
+                                //TODO: processing for restore_user function in database layer
+
+
+
+                            }
+                            else{
+                                $msg->show("you are not allowed for this action!");
+                            }
+                        }
+                    } else {
+                        $msg->show("essential parameters not set, please check!");
+                    }
+                    break;
+                /*
                 * if act is get_user_profile
                */
                 case 'get_user_profile' :
@@ -290,7 +450,6 @@ class index
                 * if act is get_user_role
                */
                 case 'get_user_role' :
-                    //TODO: check access codes
                     $essentialArray = array("id" => true);//array that show which one of the parameters is essential
                     if ($check->checkEssential($essentialArray, $_REQUEST)) {
                         $validParam = array("id" => $_REQUEST['id']);//inputs that should be check for data validity
@@ -320,7 +479,6 @@ class index
                 * if act is get_user_groups
                */
                 case 'get_user_group' :
-                    //TODO: check access codes
                     $essentialArray = array("id" => true);//array that show which one of the parameters is essential
                     if ($check->checkEssential($essentialArray, $_REQUEST)) {
                         $validParam = array("id" => $_REQUEST['id']);//inputs that should be check for data validity
@@ -350,7 +508,6 @@ class index
                 * if act is site_user_register
                */
                 case 'site_user_register' ://username is mobilenumber
-                    //TODO: check access codes
                     $essentialArray = array("firstname" => true, "lastname" => true, "password" => true, "mobilenumber" => true);//array that show which one of the parameters is essential
                     if ($check->checkEssential($essentialArray, $_REQUEST)) {
                         /*
@@ -389,7 +546,6 @@ class index
                 * if act is admin_user_register
                */
                 case 'admin_user_register' ://username is mobilenumber
-                    //TODO: check access codes
                     $essentialArray = array("firstname" => true, "lastname" => true, "password" => true, "mobilenumber" => true);//array that show which one of the parameters is essential
                     if ($check->checkEssential($essentialArray, $_REQUEST)) {
                         /*
@@ -436,7 +592,6 @@ class index
                 * if act is get_users
                */
                 case 'get_users' ://no input is necessary
-                    //TODO: check access codes
                     //call appropriate access level function(get_users)
                     if (!isset($_SESSION)) {
                         session_start();
@@ -469,7 +624,6 @@ class index
                     }
                     break;
                 case 'search_users' :
-                    //TODO: check access codes
                     //TODO: parameters not complete!
                     $validParam = array("firstname" => $_REQUEST['firstname'], "lastname" => $_REQUEST['lastname'], "email" => $_REQUEST['email'], "mobilenumber" => $_REQUEST['mobilenumber'], "gender" => $_REQUEST['gender']);//inputs that should be check for data validity
                     if ($valid->GeneralValidation($validParam, $msg)) {
@@ -482,7 +636,6 @@ class index
                 * if act is user_active1 (user activation)
                */
                 case 'user_active' :
-                    //TODO: check access codes
                     $essentialArray = array("id" => true, "activecode" => true);//array that show which one of the parameters is essential
                     if ($check->checkEssential($essentialArray, $_REQUEST)) {
                         $validParam = array("id" => $_REQUEST['id'], "activecode" => $_REQUEST['activecode']);//inputs that should be check for data validity
@@ -518,7 +671,6 @@ class index
                 * if act is user_active2 (adminstrator activation)
                */
                 case 'admin_user_active' :
-                    //TODO: check access codes
                     $essentialArray = array("id" => true);//array that show which one of the parameters is essential
                     if ($check->checkEssential($essentialArray, $_REQUEST)) {
                         $validParam = array("id" => $_REQUEST['id']);//inputs that should be check for data validity
@@ -551,7 +703,6 @@ class index
                 * if act is user_deactive
                */
                 case 'user_deactive' :
-                    //TODO: check access codes
                     $essentialArray = array("id" => true);//array that show which one of the parameters is essential
                     if ($check->checkEssential($essentialArray, $_REQUEST)) {
                         $validParam = array("id" => $_REQUEST['id']);//inputs that should be check for data validity
@@ -585,7 +736,6 @@ class index
                 * if act is delete_user
                */
                 case 'delete_user' :
-                    //TODO: check access codes
                     $essentialArray = array("id" => true);//array that show which one of the parameters is essential
                     if ($check->checkEssential($essentialArray, $_REQUEST)) {
                         $validParam = array("id" => $_REQUEST['id']);//inputs that should be check for data validity
@@ -616,7 +766,6 @@ class index
                     }
                     break;
                 case 'edit_user' :
-                    //TODO: check access codes
                     $essentialArray = array("id" => true);//array that show which one of the parameters is essential
                     if ($check->checkEssential($essentialArray, $_REQUEST)) {
                         /*
@@ -656,8 +805,6 @@ class index
                     }
                     break;
                 case 'edit_password' :
-                    //TODO: check access codes
-                    // echo $_REQUEST['password'];
                     $essentialArray = array("id" => true, "password" => true, "confirmPassword" => true);//array that show which one of the parameters is essential
                     if ($check->checkEssential($essentialArray, $_REQUEST)) {
                         if ($_REQUEST["password"] == $_REQUEST["confirmPassword"]) {

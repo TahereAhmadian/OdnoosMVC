@@ -23,6 +23,13 @@ class DataValidation
                         $output="false";
                     }
                     break;
+                case 'description':
+                    if($this->checkDescriptionValidity($val,$msg)){
+                    }
+                    else{
+                        $output="false";
+                    }
+                    break;
                 case 'username':
                     if($this->checkUserNameValidity($val,$msg)){}
                     else{
@@ -115,6 +122,23 @@ class DataValidation
             return false;
 
     }
+
+
+    /*
+         * check password validity
+         * password must be equals or biger than 8 characters
+         * password is necessary always
+         */
+    public function checkDescriptionValidity($desc,$msg){
+        if(strlen(($desc))>1000){
+            $msg->show("your description is so long!");
+            return false;
+        }
+        return true;
+    }
+
+
+
 
     /*
      * check password validity
