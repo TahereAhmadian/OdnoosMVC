@@ -89,7 +89,7 @@ class index
                                 $_SESSION['actions'] = $access->get_actions_by_userid($sent_param[0]['UserId']);
                                 $msg->get_data("login");//user information that must be returned
                                 $_SESSION['user']=$sent_param[0];
-                                var_dump($_SESSION['actions']);
+                                //var_dump($_SESSION['actions']);
                             }
                             else{
                                 $msg->show($response);
@@ -103,36 +103,28 @@ class index
                  * if act is logout
                 */
                 case 'logout' :
-                    $essentialArray = array("username" => true, "password" => true);//array that show which one of the parameters is essential
+                    $essentialArray = array("id" => true);//array that show which one of the parameters is essential
                     if ($check->checkEssential($essentialArray, $_REQUEST)) {
-                        $validParam = array("username" => $_REQUEST['username'], "password" => $_REQUEST['password']);//inputs that should be check for data validity
+                        $validParam = array("id" => $_REQUEST['id']);//inputs that should be check for data validity
                         if ($valid->GeneralValidation($validParam, $msg)) {
+                            if (!isset($_SESSION)) {
+                                session_start();
+                            }
                             $access = new A\User();
                             /*
-                             * call appropriate access level function(login_user)
+                             * call appropriate access level function(logout_user)
                              */
-                            $response = $access->login_user($validParam["username"], $validParam["password"]);
-                            //print_r($response);
-                            $sent_param = array();//array that should be sent to view layer
-                            if (is_array($response)) {
-                                foreach ($response as $key => $val) {
-                                    $sent_param = array($key => $val);
+                            if ($allowed = $access->check_user_access_to_action("logout", $_SESSION['actions'])) {
+                                $response = $access->logout_user($validParam["id"]);
+                                if($response==1){
+                                    unset($_SESSION['actions']);
+                                    unset($_SESSION['user']);
+                                    session_destroy();
+                                    $msg->show("You are logged out successfully.");
                                 }
-                                //echo "**********************************************************";
-                                // print_r($sent_param);
-                                /*
-                                 * set session for user and return allowed actions
-                                 */
-                                if (!isset($_SESSION)) {
-                                    session_start();
-
-                                }
-                                $_SESSION['actions'] = $access->get_actions_by_userid($sent_param[0]['UserId']);
-                                $msg->get_data($sent_param[0]);//user information that must be returned
-                                var_dump($_SESSION['actions']);
                             }
                             else{
-                                $msg->show($response);
+                                $msg->show("you are not allowed for this action!");
                             }
                         }
                     } else {
