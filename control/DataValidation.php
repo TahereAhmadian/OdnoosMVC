@@ -283,10 +283,10 @@ class DataValidation
      *
      */
     public function checkUserNameValidity($username,$msg){
-        echo "check username </br>";
+       // echo "check username </br>";
         if(strlen($username)>50){
             $msg->show("your name is very long!");
-            echo "false </br>";
+           // echo "false </br>";
             return false;
         }
         else{
@@ -295,7 +295,7 @@ class DataValidation
                 echo "false </br>";
                 return false;
             }
-            echo "true </br>";
+        //    echo "true </br>";
             return true;
         }
 
@@ -322,26 +322,26 @@ class DataValidation
      * check area code validity
      */
     public function checkAreaCodeValidity($phone,$msg){
-        if(is_numeric(substr($phone,0,3))){
-            if (strlen($phone) == 8) {
-                if (substr($phone, 0, 1) != '0') {
-                    $msg = new generate_message();
-                    $msg->show("area code must start with 0 digit!");
-                    return false;
-                }
-            } else {
-                $msg = new generate_message();
-                $msg->show("digits number of area code must be 3!");
-                return false;
-            }
-        }
-        else{
-            $msg = new generate_message();
-            $msg->show("area code must have digit characters!");
+      if(substr($phone , 0,1)=="+"){
+          $length = length($phone);
+          if(is_numeric(substr($phone,1,$length-1))){
+              if(strlen($phone)>=2 && strlen($phone)<=4){
+                  return true;
+              }
+              else{
+                  $msg->show("area code must be between 2 and 4 characters!");
+                  return false;
+              }
+          }
+          else{
+              $msg->show("area code must have digit characters that start with + characters!");
+              return false;
+          }
+      }
+      else{
+            $msg->show("area code must  start with + character!");
             return false;
         }
-        return true;
-
     }
     /*
      * check email validity
@@ -375,22 +375,19 @@ class DataValidation
      * check phone number validity(home phone)(only 8 characters)
      */
     public function checkPhoneNumber1Validity($phone,$msg){
+        if(strlen($phone)==8){
         if(is_numeric(substr($phone,0,8))){
-            if (strlen($phone) == 8) {
-                if (substr($phone, 0, 1) == '0') {
-                    $msg = new generate_message();
-                    $msg->show("phonenumber should not start with 0 digit!");
+                if (substr($phone, 0, 1) == '0' ||substr($phone, 0, 1) == '1') {
+                    $msg->show("phonenumber should not start with 0 or 1 digits!");
                     return false;
                 }
             } else {
-                $msg = new generate_message();
-                $msg->show("digits number of phonenumber must be 8!");
+                $msg->show("phonenumber must have digit characters!");
                 return false;
             }
         }
         else{
-            $msg = new generate_message();
-            $msg->show("phonenumber must have digit characters!");
+            $msg->show("digit numbers of phonenumber must be 8!");
             return false;
         }
         return true;
@@ -402,14 +399,12 @@ class DataValidation
     public function checkPhoneNumber2Validity($phone,$msg){
         if(is_numeric(substr($phone,0,strlen($phone)))){
             if ((strlen($phone) >=3) && (strlen($phone) <=8 ) ) {
-                if (substr($phone, 0, 1) == '0') {
-                    $msg = new generate_message();
-                    $msg->show("phonenumber should not start with 0 digit!");
+                if (substr($phone, 0, 1) == '0'||substr($phone, 0, 1) == '1') {
+                    $msg->show("phonenumber should not start with 0 or 1 digits!");
                     return false;
                 }
             } else {
-                $msg = new generate_message();
-                $msg->show("digits number of phonenumber must be between 3 and 8!");
+                $msg->show("digit numbers of phonenumber must be between 3 and 8!");
                 return false;
             }
         }

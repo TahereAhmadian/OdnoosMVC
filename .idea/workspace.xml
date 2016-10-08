@@ -24,11 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/control/index.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="357">
-              <caret line="38" column="0" selection-start-line="36" selection-start-column="12" selection-end-line="38" selection-end-column="0" />
+              <caret line="90" column="65" selection-start-line="90" selection-start-column="65" selection-end-line="90" selection-end-column="65" />
               <folding>
                 <element signature="e#145#170#0#PHP" expanded="true" />
               </folding>
@@ -36,24 +36,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="User.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Model/Access/User.php">
+      <file leaf-file-name="DataValidation.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/control/DataValidation.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="128" column="55" selection-start-line="128" selection-start-column="20" selection-end-line="128" selection-end-column="55" />
-              <folding>
-                <element signature="e#6#85#0#PHP" expanded="true" />
-                <element signature="e#110#132#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="1.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/View/1.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="28" column="48" selection-start-line="28" selection-start-column="48" selection-end-line="28" selection-end-column="48" />
+            <state relative-caret-position="304">
+              <caret line="385" column="29" selection-start-line="385" selection-start-column="29" selection-end-line="385" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -100,7 +87,6 @@
         <option value="$PROJECT_DIR$/control/check_input.php" />
         <option value="$PROJECT_DIR$/Model/Mapper/AbstractMapper.php" />
         <option value="$PROJECT_DIR$/Model/DataBase/DataBase.php" />
-        <option value="$PROJECT_DIR$/control/DataValidation.php" />
         <option value="$PROJECT_DIR$/Model/DataBase/DataBase.php" />
         <option value="$PROJECT_DIR$/control/generate_message.php" />
         <option value="$PROJECT_DIR$/public/2.php" />
@@ -114,10 +100,11 @@
         <option value="$PROJECT_DIR$/View/2.html" />
         <option value="$PROJECT_DIR$/View/2.php" />
         <option value="$PROJECT_DIR$/View/1.html" />
-        <option value="$PROJECT_DIR$/control/index.php" />
-        <option value="$PROJECT_DIR$/control/index.php" />
         <option value="$PROJECT_DIR$/Model/Access/User.php" />
         <option value="$PROJECT_DIR$/Model/Access/User.php" />
+        <option value="$PROJECT_DIR$/control/DataValidation.php" />
+        <option value="$PROJECT_DIR$/control/index.php" />
+        <option value="$PROJECT_DIR$/control/index.php" />
       </list>
     </option>
   </component>
@@ -228,6 +215,20 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="odnoosMVC" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="odnoosMVC" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="control" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -315,12 +316,12 @@
       <workItem from="1475127829450" duration="14957000" />
       <workItem from="1475386632739" duration="36984000" />
       <workItem from="1475559718311" duration="64024000" />
-      <workItem from="1475905451827" duration="2486000" />
+      <workItem from="1475905451827" duration="14292000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="213723000" />
+    <option name="totallyTimeSpent" value="225529000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -585,6 +586,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -675,14 +677,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/control/DataValidation.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
-          <caret line="386" column="55" selection-start-line="386" selection-start-column="55" selection-end-line="386" selection-end-column="55" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/2.php" />
     <entry file="file://$PROJECT_DIR$/public/two.php" />
     <entry file="file://$PROJECT_DIR$/public/1.php" />
@@ -744,7 +738,7 @@
         <state relative-caret-position="170">
           <caret line="12" column="16" selection-start-line="1" selection-start-column="4" selection-end-line="20" selection-end-column="0" />
           <folding>
-            <element signature="e#6#31#0#PHP" expanded="true" />
+            <element signature="e#6#31#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -757,23 +751,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/control/index.php">
+    <entry file="file://$PROJECT_DIR$/Model/Access/User.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="38" column="0" selection-start-line="36" selection-start-column="12" selection-end-line="38" selection-end-column="0" />
+        <state relative-caret-position="-16798">
+          <caret line="479" column="20" selection-start-line="479" selection-start-column="20" selection-end-line="479" selection-end-column="20" />
           <folding>
-            <element signature="e#145#170#0#PHP" expanded="true" />
+            <element signature="e#6#85#0#PHP" expanded="true" />
+            <element signature="e#110#132#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Model/Access/User.php">
+    <entry file="file://$PROJECT_DIR$/control/DataValidation.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="128" column="55" selection-start-line="128" selection-start-column="20" selection-end-line="128" selection-end-column="55" />
+        <state relative-caret-position="304">
+          <caret line="385" column="29" selection-start-line="385" selection-start-column="29" selection-end-line="385" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/control/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="90" column="65" selection-start-line="90" selection-start-column="65" selection-end-line="90" selection-end-column="65" />
           <folding>
-            <element signature="e#6#85#0#PHP" expanded="true" />
-            <element signature="e#110#132#0#PHP" expanded="true" />
+            <element signature="e#145#170#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>

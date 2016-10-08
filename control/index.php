@@ -71,21 +71,63 @@ class index
                              * call appropriate access level function(login_user)
                              */
                             $response = $access->login_user($validParam["username"], $validParam["password"]);
-                            print_r($response);
+                            //print_r($response);
                             $sent_param = array();//array that should be sent to view layer
                             if (is_array($response)) {
                                 foreach ($response as $key => $val) {
                                     $sent_param = array($key => $val);
                                 }
-                                echo "**********************************************************";
-                                 print_r($sent_param);
+                                //echo "**********************************************************";
+                                // print_r($sent_param);
                                 /*
                                  * set session for user and return allowed actions
                                  */
                                 if (!isset($_SESSION)) {
                                     session_start();
-                                    $_SESSION['actions'] = $access->get_actions_by_userid($sent_param[0]['UserId']);
+
                                 }
+                                $_SESSION['actions'] = $access->get_actions_by_userid($sent_param[0]['UserId']);
+                                $msg->get_data("login");//user information that must be returned
+                                $_SESSION['user']=$sent_param[0];
+                                var_dump($_SESSION['actions']);
+                            }
+                            else{
+                                $msg->show($response);
+                            }
+                        }
+                    } else {
+                        $msg->show("essential parameters not set, please check!");
+                    }
+                    break;
+                /*
+                 * if act is logout
+                */
+                case 'logout' :
+                    $essentialArray = array("username" => true, "password" => true);//array that show which one of the parameters is essential
+                    if ($check->checkEssential($essentialArray, $_REQUEST)) {
+                        $validParam = array("username" => $_REQUEST['username'], "password" => $_REQUEST['password']);//inputs that should be check for data validity
+                        if ($valid->GeneralValidation($validParam, $msg)) {
+                            $access = new A\User();
+                            /*
+                             * call appropriate access level function(login_user)
+                             */
+                            $response = $access->login_user($validParam["username"], $validParam["password"]);
+                            //print_r($response);
+                            $sent_param = array();//array that should be sent to view layer
+                            if (is_array($response)) {
+                                foreach ($response as $key => $val) {
+                                    $sent_param = array($key => $val);
+                                }
+                                //echo "**********************************************************";
+                                // print_r($sent_param);
+                                /*
+                                 * set session for user and return allowed actions
+                                 */
+                                if (!isset($_SESSION)) {
+                                    session_start();
+
+                                }
+                                $_SESSION['actions'] = $access->get_actions_by_userid($sent_param[0]['UserId']);
                                 $msg->get_data($sent_param[0]);//user information that must be returned
                                 var_dump($_SESSION['actions']);
                             }
@@ -132,7 +174,7 @@ class index
                     }
                     break;
                 /*
-                * if act is get_user_profile
+                * if act is set_user_profile
                */
                 case 'set_user_profile' :
                     $essentialArray = array("id" => true);//array that show which one of the parameters is essential
@@ -163,6 +205,49 @@ class index
                                     $msg->show("set user profile information was successful.");
                                 } else {
                                     $msg->show("set user profile information was unsuccessful!");
+                                }
+                            } else {
+                                $msg->show("you are not allowed for this action!");
+                            }
+                        } else {
+                            $msg->show("all of input parameters are not valid!");
+                        }
+                    } else {
+                        $msg->show("essential parameters not set, please check!");
+                    }
+                    break;
+                /*
+                * if act is edit_user_profile
+               */
+                case 'edit_user_profile' :
+                    $essentialArray = array("id" => true);//array that show which one of the parameters is essential
+                    if ($check->checkEssential($essentialArray, $_REQUEST)) {
+                        /*
+                         * Initialize optional parameters
+                         */
+                        $_REQUEST["email"] = (isset($_REQUEST["email"]) ? $_REQUEST["email"] : "");
+                        $_REQUEST["state"] = (isset($_REQUEST["state"]) ? $_REQUEST["state"] : "");
+                        $_REQUEST["city"] = (isset($_REQUEST["city"]) ? $_REQUEST["city"] : "");
+                        $_REQUEST["region"] = (isset($_REQUEST["region"]) ? $_REQUEST["region"] : "");
+                        $_REQUEST["address"] = (isset($_REQUEST["address"]) ? $_REQUEST["address"] : "");
+                        $_REQUEST["gender"] = (isset($_REQUEST["gender"]) ? $_REQUEST["gender"] : "");
+
+                        $validParam = array("id" => $_REQUEST['id'], "gender" => $_REQUEST['gender'], "state" => $_REQUEST['state'], "city" => $_REQUEST['city'], "reigon" => $_REQUEST['region'], "address" => $_REQUEST['address']);//inputs that should be check for data validity
+                        if ($valid->GeneralValidation($validParam, $msg)) {
+                            if (!isset($_SESSION)) {
+                                session_start();
+                            }
+                            $access = new A\User();
+                            /*
+                           * check user is allowed
+                           */
+                            if ($allowed = $access->check_user_access_to_action("set_user_profile", $_SESSION['actions'])) {
+
+                                //call appropriate access level function(set_user_profile)
+                                if ($response = $access->edit_user_profile($validParam["id"], $validParam["gender"], $validParam["state"], $validParam["city"], $validParam["reigon"], $validParam["address"])) {
+                                    $msg->show("edit user profile information was successful.");
+                                } else {
+                                    $msg->show("edit user profile information was unsuccessful!");
                                 }
                             } else {
                                 $msg->show("you are not allowed for this action!");
@@ -377,7 +462,7 @@ class index
                             foreach ($response as $key => $val) {
                                 $sent_param[] = array("FirstName" => $val['FirstName'], "LastName" => $val['LastName'], "Email" => $val['Email'], "CreationDate" => $val['CreationDate'], "Gender" => $val['Gender']);
                             }
-                            echo "********************************************************** </br>";
+                           // echo "********************************************************** </br>";
                             //print_r($sent_param);
 
                             $msg->get_data($sent_param);//user profile information that must be returned

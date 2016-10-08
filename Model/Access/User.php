@@ -30,7 +30,7 @@ class User
     {
         //check id validity
         if( !$this->checkId( $id ) )
-            return "Err get user by id: id is not valid ";
+            return "Err get user by id: id is not valid";
 
         //create a new Instance from UserFullDataMapper
         $MapperInstance = new M\UserFullDataMapper( $this->dataBase );
@@ -132,7 +132,7 @@ class User
         // if no parameter sent , return
         if( $FirstName == '' && $LastName == '' && $Email == '' && $Telephone = '' )
         {
-            return " msg edit user: you should specify at least one parameter ";
+            return "msg edit user: you should specify at least one parameter";
         }
 
         // create data for update
@@ -261,7 +261,7 @@ class User
     {
         //check id validity
         if( !$this->checkId( $id ) )
-            return "Err delete user by id: id is not valid ";
+            return "Err delete user by id: id is not valid";
 
         //create new instance of User History
         $MapperInstance = new M\UserHistoryMapper( $this->dataBase );
@@ -288,7 +288,7 @@ class User
     {
         //check id validity
         if( !$this->checkId( $UserId ) )
-            return "Err activate user : id is not valid ";
+            return "Err activate user: id is not valid";
         //create new instance of user history
         $MapperInstance = new M\UserHistoryMapper( $this->dataBase );
 
@@ -314,7 +314,7 @@ class User
 
         //check id validity
         if( !$this->checkId( $UserId ) )
-            return "Err activate user : id is not valid ";
+            return "Err deactivate user: id is not valid";
 
         $MapperInstance = new M\UserHistoryMapper( $this->dataBase );
 
@@ -434,7 +434,7 @@ class User
     {
         //check id validity
         if( !$this->checkId( $UserId ) )
-            return "Err check user lost password : id is not valid ";
+            return "Err check user lost password: id is not valid";
 
         $UserHistoryMapper = new M\UserHistoryMapper( $this->dataBase );
 
@@ -477,7 +477,7 @@ class User
         if( !( $UId = $this->check_username_exists( $username ) ) )
         {
             //if username not registerd return message and exit
-            return " Err login : This Username have not registered ";
+            return "Err login: This Username have not registered";
         }
 
         //check validity of username and password in the system
@@ -497,7 +497,7 @@ class User
         if( !$this->check_user_access_to_action( 'login' , $ActionList ) )
         {
             // no access to login
-            return "Err login: You have not access to login in system ";
+            return "Err login: You have not access to login in system";
         }
 
         // create a new instance from userFullData ( VIEW )
@@ -549,7 +549,7 @@ class User
                 $update = $UserHistoryMapper->update( $data , $condition );
 
 
-                echo "OK: Your login was successful";
+                //echo "OK: Your login was successful";
 
                 // login is successful , return data
                 return $UserFullData;
@@ -572,7 +572,7 @@ class User
     {
         //check user id
         if( !$this->checkId( $UserId ) )
-            return "msg logout: User id is not valid ";
+            return "msg logout: User id is not valid";
 
         //create new instance from
         $UserHistoryMapper = new M\UserHistoryMapper( $this->dataBase );
@@ -703,10 +703,10 @@ class User
 
         if( $Gender === '' && $StateId === '' && $CityId === '' && $RegionId === '' && $Address === '')
         {
-            return "You should specify at least one parameter.";
+            return "You should specify at least one parameter";
         }
         if( !$this->checkId( $UserId ) )
-            return "Err edit_user_profile: User Id is not valid ";
+            return "Err edit_user_profile: User Id is not valid";
 
         // create a new instance from GetUsersGroupsMapper
         $UserProfileMapper = new M\UserProfileMapper( $this->dataBase );
@@ -778,11 +778,11 @@ class User
     {
         if( $RoleName === '' && $RoleDescription === '')
         {
-            return "You should specify at least one parameter.";
+            return "You should specify at least one parameter";
         }
         //check role id validity
         if( !$this->checkId( $RoleId ) )
-            return "Err edit_role: Role Id is not valid ";
+            return "Err edit_role: Role Id is not valid";
 
         // create new instance from RoleMapper
         $RoleMapper = new M\RolesMapper( $this->dataBase );
@@ -825,7 +825,7 @@ class User
     {
         // check action id
         if( !$this->checkId( $ActionId ) )
-            return "Err get action : action id is not valid";
+            return "Err get action: action id is not valid";
 
         // create new instance from action mapper
         $ActionMapper = new M\ActionsMapper( $this->dataBase );
@@ -841,11 +841,11 @@ class User
     public function edit_action( $ActionId , $ActionName='' , $ActionDescription ='')
     {
         if( $ActionName === ''  && $ActionDescription === '' )
-            return 'Edit Action: You should specify at least One parameter!';
+            return 'Edit Action: You should specify at least One parameter';
 
         //Check action id validity
         if( !$this->checkId( $ActionId ) )
-            return "Err edit_action: action Id is not valid ";
+            return "Err edit_action: action Id is not valid";
 
         // create new instance from RoleMapper
         $ActionMapper = new M\ActionsMapper( $this->dataBase );
@@ -944,7 +944,7 @@ class User
     public function delete_role( $RoleId )
     {
         if( !$this->checkId( $RoleId ))
-            return "Err delete role: role  id is not valid";
+            return "Err delete role: role id is not valid";
         //create new instance of role mapper
         $RoleMapper = new M\RolesMapper( $this->dataBase );
         //prepare condition
@@ -1038,7 +1038,7 @@ class User
     public function delete_group( $GroupId )
     {
         if( !$this->checkId( $GroupId ) )
-            return "Err: delete group: group id is not valid ";
+            return "Err delete group: group id is not valid";
         // create instance of group mapper
         $GroupMapper = new M\GroupsMapper( $this->dataBase );
         // prepare condition
@@ -1239,7 +1239,7 @@ class User
     public function get_region_by_id( $RegionId )
     {
         if( !$this->checkId( $RegionId ) )
-            return "Err get region by id: region id is not valid ";
+            return "Err get region by id: region id is not valid";
         // create new instance from Region Mapper
         $RegionMapper = new M\RegionsMapper( $this->dataBase );
 
@@ -1315,9 +1315,9 @@ class User
     public function set_role_group( $RoleId , $GroupId )
     {
         if( !$this->checkId( $RoleId) )
-            return "Err set role group: role id is not valid ";
+            return "Err set role group: role id is not valid";
         if( !$this->checkId( $GroupId ) )
-            return "Err set role group: group id is not valid ";
+            return "Err set role group: group id is not valid";
         //create new instance of role group mapper
         $RoleGroupMapper = new M\RoleGroupMapper( $this->dataBase );
         // create array for data
@@ -1336,9 +1336,9 @@ class User
     public function delete_role_group( $RoleId , $GroupId )
     {
         if( !$this->checkId( $RoleId) )
-            return "Err delete role group: role id is not valid ";
+            return "Err delete role group: role id is not valid";
         if( !$this->checkId( $GroupId ) )
-            return "Err delete role group: group id is not valid ";
+            return "Err delete role group: group id is not valid";
         //create new instance of role group mapper
         $RoleGroupMapper = new M\RoleGroupMapper( $this->dataBase );
         // create condition
@@ -1358,9 +1358,9 @@ class User
     public function set_user_group( $UserId , $GroupId )
     {
         if( !$this->checkId( $UserId) )
-            return "Err set user group: user id is not valid ";
+            return "Err set user group: user id is not valid";
         if( !$this->checkId( $GroupId ) )
-            return "Err set role group: group id is not valid ";
+            return "Err set role group: group id is not valid";
         //create new instance of user group mapper
         $UserGroupMapper = new M\UserGroupMapper( $this->dataBase );
         // create array for data
@@ -1379,9 +1379,9 @@ class User
     public function delete_user_group( $UserId , $GroupId )
     {
         if( !$this->checkId( $UserId) )
-            return "Err set user group: user id is not valid ";
+            return "Err set user group: user id is not valid";
         if( !$this->checkId( $GroupId ) )
-            return "Err set role group: group id is not valid ";
+            return "Err set role group: group id is not valid";
         //create new instance of user group mapper
         $UserGroupMapper = new M\UserGroupMapper( $this->dataBase );
         // create condition
